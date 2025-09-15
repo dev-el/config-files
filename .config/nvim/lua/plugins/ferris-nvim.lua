@@ -1,0 +1,3 @@
+return {
+    'vxpm/ferris.nvim'
+}
