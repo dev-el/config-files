@@ -1,0 +1,79 @@
+{
+  "project_panel": {
+    "dock": "left"
+  },
+  "title_bar": {
+    "show_sign_in": false
+  },
+  "tab_bar": {
+    "show_nav_history_buttons": false
+  },
+  "inline_code_actions": false,
+  "cursor_shape": "block",
+  "cursor_blink": false,
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  },
+  "soft_wrap": "editor_width",
+  "vim_mode": true,
+  "lsp": {
+    "rust-analyzer": {
+      "initialization_options": {
+        "diagnostics": {
+          "disabled": ["unresolved-proc-macro", "macro-error"]
+        },
+        "imports": {
+          "granularity": {
+            "group": "module"
+          },
+          "prefix": "self"
+        },
+        "cargo": {
+          "buildScripts": {
+            "enable": true
+          }
+        },
+        "procMacro": {
+          "enable": true
+        },
+        "checkOnSave": true,
+        "check": {
+          "command": "clippy",
+          "workspace": true
+        }
+      }
+    }
+  },
+  "ui_font_size": 20,
+  "buffer_font_size": 20,
+  "ui_font_family": "Noto Sans",
+  "buffer_font_family": "IBM Plex Mono",
+  "experimental.theme_overrides": {
+    "syntax": {
+      "punctuation": {
+        "color": "#d4d4d4"
+      },
+      "punctuation.delimiter": {
+        "color": "#d4d4d4"
+      },
+      "punctuation.bracket": {
+        "color": "#d4d4d4"
+      },
+      "punctuation.special": {
+        "color": "#d4d4d4"
+      }
+    }
+  },
+  "git": {
+    "inline_blame": {
+      "enabled": false
+    }
+  },
+  "theme": {
+    "mode": "dark",
+    "light": "VSCode Light+",
+    "dark": "VSCode Clean Dark Modern"
+  },
+  "tab_size": 2
+}
