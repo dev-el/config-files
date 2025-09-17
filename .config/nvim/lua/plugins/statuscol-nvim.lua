@@ -11,7 +11,7 @@ return {
 			setopt = true, -- Whether to set the 'statuscolumn' option, may be set to false for those who
 			thousands = false, -- or line number thousands separator string ("." / ",")
 			relculright = false, -- whether to right-align the cursor line number with 'relativenumber' set
-			ft_ignore = { "neo-tree", "netrw" }, -- Lua table with 'filetype' values for which 'statuscolumn' will be unset
+			ft_ignore = { "neo-tree", "netrw", "dbui" }, -- Lua table with 'filetype' values for which 'statuscolumn' will be unset
 			bt_ignore = { "terminal" }, -- Lua table with 'buftype' values for which 'statuscolumn' will be unset
 			segments = {
 				{

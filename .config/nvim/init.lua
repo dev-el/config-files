@@ -66,11 +66,11 @@ vim.cmd([[
 highlight MsgArea guibg=#373737
 highlight ModeMsg guifg=#d4d4d4 guibg=#373737
 highlight MoreMsg guifg=#d4d4d4 guibg=#373737
-highlight Directory guifg=#569cd6 guibg=#373737
 highlight Question guifg=#569cd6 guibg=#373737
 highlight ErrorMsg guifg=#f44747 guibg=#373737
 highlight WinBar cterm=None gui=None guifg=#d4d4d4 guibg=#373737
 highlight WinBarNC guifg=#d4d4d4 guibg=#373737
+highlight Directory guifg=#569cd6
 ]])
 
 vim.cmd([[
