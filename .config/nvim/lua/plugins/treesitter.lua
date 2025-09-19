@@ -18,6 +18,7 @@ return {
 				"heex",
 				"javascript",
 				"html",
+				"php",
 			},
 			highlight = { enable = true },
 			indent = { enable = true },
