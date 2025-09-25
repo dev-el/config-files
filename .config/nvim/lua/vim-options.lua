@@ -277,7 +277,12 @@ vim.g.vimwiki_list = {
 	},
 }
 
-vim.keymap.set({ "n", "x" }, "<Leader>gn", [[:silent execute '!chromium --incognito ' . shellescape(expand('<cfile>'), 1)<CR>]], {})
+vim.keymap.set(
+	{ "n", "x" },
+	"<Leader>gn",
+	[[:silent execute '!chromium --incognito ' . shellescape(expand('<cfile>'), 1)<CR>]],
+	{}
+)
 
 vim.g.bullets_enabled_file_types = {
 	"markdown",
@@ -326,7 +331,11 @@ vim.keymap.set("n", "<F12>", function()
 	require("dap").step_out()
 end)
 vim.keymap.set("n", "<Leader>dg", function()
+	local session = require("dap").session()
 	require("dap").terminate()
+	if session and session.config.immediatelyCloseDAPUI then
+		require("dapui").close()
+	end
 end)
 vim.keymap.set("n", "<Leader>di", function()
 	require("dap").step_out()
@@ -601,7 +610,11 @@ vim.api.nvim_create_autocmd("User", {
 			require("dap").step_into()
 		end)
 		vim.keymap.set("n", "<Leader>dg", function()
+			local session = require("dap").session()
 			require("dap").terminate()
+			if session and session.config.immediatelyCloseDAPUI then
+				require("dapui").close()
+			end
 		end)
 		vim.keymap.set("n", "<Leader>di", function()
 			require("dap").step_out()
