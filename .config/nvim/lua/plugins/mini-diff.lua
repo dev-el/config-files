@@ -11,7 +11,7 @@ return {
 			},
 		})
 
-		vim.keymap.set("n", "<leader>hr", ":lua MiniDiff.toggle_overlay()<CR>", { noremap = true, silent = true })
+		vim.keymap.set("n", "<leader>hr", get_search_list_cmd(8), { noremap = true, silent = true })
 		vim.keymap.set(
 			"n",
 			"<leader>hg",
