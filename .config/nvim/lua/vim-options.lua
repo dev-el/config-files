@@ -622,6 +622,15 @@ vim.g.loaded_netrwSettings = 1
 vim.g.loaded_netrwFileHandlers = 1
 vim.g.loaded_netrw_gitignore = 1
 
+vim.g.NERDTreeMapCustomOpen = "e"
+vim.g.NERDTreeMapOpenExpl = "E"
+vim.g.NERDTreeMapOpenSplit = "h"
+vim.g.NERDTreeMapOpenVSplit = "r"
+vim.g.NERDTreeMapRefresh = "R"
+vim.g.NERDTreeMapRefreshRoot = "H"
+vim.g.NERDTreeMapToggleFilters = "gf"
+vim.g.NERDTreeMapToggleFiles = "gF"
+
 vim.keymap.set({ "n", "x" }, "<Leader>vj", function()
 	vim.cmd(
 		[[execute "silent !zathura --synctex-forward " . line('.') . ":" . col('.') . ":" . bufname('%') . " " . b:vimtex.compiler.file_info.root . "/" . b:vimtex.compiler.file_info.target_name  . ".pdf"]]
