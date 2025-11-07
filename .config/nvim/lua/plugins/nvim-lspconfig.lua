@@ -43,9 +43,23 @@ return {
 
 				keymap.set("n", "<leader>rr", vim.lsp.buf.rename, opts) -- smart rename
 
+        opts.desc = "Show global diagnostics"
+
+        keymap.set("n", "<leader>gg", function()
+          vim.diagnostic.setqflist({})
+          if vim.g.loclist_mode then
+            search_list_mode_toggle()
+          end
+        end, opts) -- show global diagnostics
+
 				opts.desc = "Show buffer diagnostics"
 
-				keymap.set("n", "<leader>er", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
+        keymap.set("n", "<leader>er", function()
+          vim.diagnostic.setloclist({})
+          if not vim.g.loclist_mode then
+            search_list_mode_toggle()
+          end
+        end, opts) -- show diagnostics for file
 
 				opts.desc = "Show line diagnostics"
 

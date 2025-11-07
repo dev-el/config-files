@@ -312,22 +312,63 @@ vim.keymap.set("n", "ftk", "<C-w><C-w>", { noremap = true })
 
 vim.keymap.set("n", "fti", "<C-w><C-b>", { noremap = true })
 
-vim.keymap.set("n", "fen", ":cnext<CR>", { noremap = true, silent = true })
+search_qflist_mode = {
+  [0] = ":cnext<CR>",
+  [1] = ":cbelow<CR>",
+  [2] = ":cprev<CR>",
+  [3] = ":cabove<CR>",
+  [4] = ":crewind<CR>",
+  [5] = ":clast<CR>",
+  [6] = ":botright copen<CR>",
+  [7] = ":cclose<CR>",
+  [8] = ":lua vim.fn.setqflist({})<CR>"
+}
 
-vim.keymap.set("n", "feh", ":cbelow<CR>", { noremap = true, silent = true })
+search_loclist_mode = {
+  [0] = ":lnext<CR>",
+  [1] = ":lbelow<CR>",
+  [2] = ":lprev<CR>",
+  [3] = ":labove<CR>",
+  [4] = ":lrewind<CR>",
+  [5] = ":llast<CR>",
+  [6] = ":lopen<CR>",
+  [7] = ":lclose<CR>",
+  [8] = ":lua vim.fn.setloclist(0, {}, 'r')<CR>"
+}
 
-vim.keymap.set("n", "fem", ":cprev<CR>", { noremap = true, silent = true })
+function get_search_list_cmd(ix)
+  if vim.g.loclist_mode then
+    return search_loclist_mode[ix]
+  else
+    return search_qflist_mode[ix]
+  end
+end
 
-vim.keymap.set("n", "feu", ":cabove<CR>", { noremap = true, silent = true })
+search_list_mode_toggle = function()
+  vim.g.loclist_mode = not vim.g.loclist_mode
 
-vim.keymap.set("n", "fef", ":crewind<CR>", { noremap = true, silent = true })
+  vim.keymap.set("n", "fen", get_search_list_cmd(0), { noremap = true, silent = true })
+  vim.keymap.set("n", "feh", get_search_list_cmd(1), { noremap = true, silent = true })
+  vim.keymap.set("n", "fem", get_search_list_cmd(2), { noremap = true, silent = true })
+  vim.keymap.set("n", "feu", get_search_list_cmd(3), { noremap = true, silent = true })
+  vim.keymap.set("n", "fef", get_search_list_cmd(4), { noremap = true, silent = true })
+  vim.keymap.set("n", "fec", get_search_list_cmd(5), { noremap = true, silent = true })
+  vim.keymap.set("n", "fej", get_search_list_cmd(6), { noremap = true, silent = true })
+  vim.keymap.set("n", "ff", get_search_list_cmd(7), { noremap = true, silent = true })
+  vim.keymap.set("n", "<leader>hr", get_search_list_cmd(8), { noremap = true, silent = true })
+end
 
-vim.keymap.set("n", "fec", ":clast<CR>", { noremap = true, silent = true })
+vim.g.loclist_mode = false
 
-vim.keymap.set("n", "fej", ":copen<CR>", { noremap = true, silent = true })
-
-vim.keymap.set("n", "ff", ":cclose<CR>", { noremap = true, silent = true })
-
+vim.keymap.set("n", "fe<space>", search_list_mode_toggle, { noremap = true, silent = true })
+vim.keymap.set("n", "fen", get_search_list_cmd(0), { noremap = true, silent = true })
+vim.keymap.set("n", "feh", get_search_list_cmd(1), { noremap = true, silent = true })
+vim.keymap.set("n", "fem", get_search_list_cmd(2), { noremap = true, silent = true })
+vim.keymap.set("n", "feu", get_search_list_cmd(3), { noremap = true, silent = true })
+vim.keymap.set("n", "fef", get_search_list_cmd(4), { noremap = true, silent = true })
+vim.keymap.set("n", "fec", get_search_list_cmd(5), { noremap = true, silent = true })
+vim.keymap.set("n", "fej", get_search_list_cmd(6), { noremap = true, silent = true })
+vim.keymap.set("n", "ff", get_search_list_cmd(7), { noremap = true, silent = true })
 vim.keymap.set("n", "<leader>hh", ":nohlsearch<CR>")
 
 vim.api.nvim_create_autocmd("FileType", {
