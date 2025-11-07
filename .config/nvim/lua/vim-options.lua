@@ -593,7 +593,7 @@ vim.keymap.set({ "n", "x" }, "g<Space>t", function()
 end, { noremap = true, expr = true })
 
 vim.api.nvim_create_autocmd("FileType", {
-	pattern = { "neo-tree" },
+	pattern = { "neo-tree", "dbui" },
 	callback = function()
 		require("ufo").detach()
 		vim.opt_local.foldenable = false
@@ -646,3 +646,8 @@ vim.keymap.set({ "n", "t" }, "<C-k>", "<C-\\><C-n>", { noremap = true })
 vim.keymap.set("n", "<Leader>hef", ":lua require('ferris.methods.expand_macro')()<CR>", { noremap = true })
 vim.keymap.set("n", "<Leader>her", ":lua require('ferris.methods.rebuild_macros')()<CR>", { noremap = true })
 vim.keymap.set("n", "<Leader>hec", ":lua require('ferris.methods.reload_workspace')()<CR>", { noremap = true })
+
+vim.keymap.set("n", "<Leader>,,", ":DBUIToggle<CR>", { noremap = true })
+vim.keymap.set("n", "<Leader>d,", ":DBUIFindBuffer<CR>", { noremap = true })
+
+vim.g.db_ui_force_echo_notifications = 1

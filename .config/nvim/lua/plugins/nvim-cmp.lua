@@ -102,6 +102,7 @@ return {
 				{ name = "nvim_lsp" },
 				{ name = "nvim_lsp_signature_help" },
 				{ name = "luasnip" },
+				{ name = "vim-dadbod-completion" },
 				{ name = "buffer" },
 				{ name = "path" },
 			}),
