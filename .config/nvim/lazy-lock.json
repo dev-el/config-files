@@ -56,6 +56,7 @@
   "vim-dadbod-completion": { "branch": "master", "commit": "a8dac0b3cf6132c80dc9b18bef36d4cf7a9e1fe6" },
   "vim-dadbod-ui": { "branch": "master", "commit": "e8b53c0f3aa6e6127ac2a2d2071d9aade6c6e373" },
   "vim-visual-multi": { "branch": "master", "commit": "a6975e7c1ee157615bbc80fc25e4392f71c344d4" },
+  "vimspector": { "branch": "master", "commit": "97984cafcf5e15befa05ec134d644e5e4f1c07f3" },
   "vim_agentspeak_jason": { "branch": "master", "commit": "78657228decafc141d3f55dea1b11458e59a2cfa" },
   "vimtex": { "branch": "master", "commit": "85cb04f5a9d2289b9d2b62d5d84342fe9675ec08" },
   "vscode": { "branch": "main", "commit": "5769f298af4abf371528b25623fecb1e069c858c" },

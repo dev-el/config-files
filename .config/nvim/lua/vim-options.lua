@@ -191,24 +191,30 @@ vim.keymap.set("n", "<leader>ek", ":wincmd j<CR>", {})
 vim.keymap.set("n", "<leader>ei", ":wincmd k<CR>", {})
 vim.keymap.set("n", "<leader>el", ":wincmd l<CR>", {})
 
+vim.keymap.set("n", "<leader>eJ", ":wincmd H<CR>", {})
+vim.keymap.set("n", "<leader>eK", ":wincmd J<CR>", {})
+vim.keymap.set("n", "<leader>eI", ":wincmd K<CR>", {})
+vim.keymap.set("n", "<leader>eL", ":wincmd L<CR>", {})
+
 vim.keymap.set("n", "<leader>w", ":w<CR>", {})
 
-vim.keymap.set("n", "<leader>rg", ":bprevious <bar> bdelete #<CR>", {})
+vim.keymap.set("n", "<leader>rg", ":bprevious <bar> bwipeout #<CR>", {})
 
 vim.keymap.set("n", "<leader>ff", ":q<CR>", {})
 vim.keymap.set("n", "<leader>re", ":qa<CR>", {})
-vim.keymap.set("n", "<leader>vv", ":q!<CR>", {})
-vim.keymap.set("n", "<leader>vd", ":bprevious <bar> bdelete! #<CR>", {})
+vim.keymap.set("n", "<leader>vv", ":bwipeout!<CR>", {})
+vim.keymap.set("n", "<leader>vd", ":bprevious <bar> bwipeout! #<CR>", {})
 
 vim.keymap.set("n", "<leader>rh", ":enew<CR>", {})
-
 vim.keymap.set("n", "<leader>rj", ":vertical leftabove split<CR>", {})
-
 vim.keymap.set("n", "<leader>rl", ":vertical rightbelow split<CR>", {})
-
 vim.keymap.set("n", "<leader>ri", ":horizontal leftabove split<CR>", {})
-
 vim.keymap.set("n", "<leader>rk", ":horizontal rightbelow split<CR>", {})
+
+vim.keymap.set("n", "<leader>rJ", ":vertical topleft split<CR>", {})
+vim.keymap.set("n", "<leader>rL", ":vertical botright split<CR>", {})
+vim.keymap.set("n", "<leader>rI", ":horizontal topleft split<CR>", {})
+vim.keymap.set("n", "<leader>rK", ":horizontal botright split<CR>", {})
 
 vim.keymap.set("n", "<leader>gi", "<C-o>", {})
 vim.keymap.set("n", "<leader>gk", "<C-i>", {})
@@ -305,6 +311,147 @@ vim.keymap.set({ "n", "x" }, "g<Space>k", "zc")
 vim.keymap.set({ "n", "x" }, "g<Space>j", "za")
 vim.keymap.set({ "n", "x" }, "g<Space>n", "zf")
 vim.keymap.set({ "n", "x" }, "g<Space>m", "zD")
+
+vim.keymap.set("n", "<Leader>dd", function()
+  vim.fn["vimspector#Launch"]()
+end)
+vim.keymap.set("n", "<F5>", function()
+  vim.fn["vimspector#Continue"]()
+end)
+vim.keymap.set("n", "<F10>", function()
+  vim.fn["vimspector#StepOver"]()
+end)
+vim.keymap.set("n", "<Leader>dn", function()
+  vim.fn["vimspector#StepOver"]()
+end)
+vim.keymap.set("n", "<F11>", function()
+  vim.fn["vimspector#StepInto"]()
+end)
+vim.keymap.set("n", "<Leader>dk", function()
+  vim.fn["vimspector#StepInto"]()
+end)
+vim.keymap.set("n", "<F12>", function()
+  vim.fn["vimspector#StepOut"]()
+end)
+vim.keymap.set("n", "<Leader>dgg", function()
+  vim.fn["vimspector#Stop"]()
+end)
+vim.keymap.set("n", "<Leader>dgv", function()
+  vim.fn["vimspector#Reset"]({
+    interactive = false
+  })
+end)
+vim.keymap.set("n", "<Leader>di", function()
+  vim.fn["vimspector#StepOut"]()
+end)
+vim.keymap.set("n", "<Leader>db", function()
+  vim.fn["vimspector#ToggleBreakpoint"]()
+end)
+vim.keymap.set("n", "<Leader>dh", function()
+  vim.fn["vimspector#ClearBreakpoints"]()
+end)
+vim.keymap.set("n", "<Leader>dB", function()
+  local file = vim.fn.expand("%:p")
+  local line = vim.fn.line(".")
+  vim.fn["vimspector#SetLineBreakpoint"](
+    file,
+    line
+  )
+end)
+vim.keymap.set("n", "<Leader>du", function()
+  local file = vim.fn.expand("%:p")
+  local line = vim.fn.line(".")
+  local logMessage = vim.fn.input("Log Message: ")
+  vim.fn["vimspector#SetLineBreakpoint"](
+    file,
+    line,
+    {
+      logMessage = logMessage,
+    }
+  )
+end)
+vim.keymap.set("n", "<Leader>dvn", function()
+  local file = vim.fn.expand("%:p")
+  local line = vim.fn.line(".")
+  local condition = vim.fn.input("Breakpoint Condition: ")
+  local hitCount = tonumber(vim.fn.input("Hit Count: ")) or 1
+  vim.fn["vimspector#SetLineBreakpoint"](
+    file,
+    line,
+    {
+      condition = condition,
+      hitCount = hitCount,
+    }
+  )
+end)
+vim.keymap.set("n", "<Leader>dvm", function()
+  local file = vim.fn.expand("%:p")
+  local line = vim.fn.line(".")
+  local condition = vim.fn.input("Breakpoint Condition: ") or nil
+  local logMessage = vim.fn.input("Log Message: ") or nil
+  local hitCount = tonumber(vim.fn.input("Hit Count: ")) or nil
+  local t = vim.tbl_extend("force",
+    {},
+    condition and { condition = condition },
+    logMessage and { logMessage = logMessage },
+    hitCount and { hitCount = hitCount },
+    {}
+  )
+  vim.fn["vimspector#SetLineBreakpoint"](
+    file,
+    line,
+    t
+  )
+end)
+vim.keymap.set("n", "<Leader>dvi", function()
+  vim.fn["vimspector#UpFrame"]()
+end)
+vim.keymap.set("n", "<Leader>dvk", function()
+  vim.fn["vimspector#DownFrame"]()
+end)
+vim.keymap.set("n", "<Leader>dj", function()
+  vim.fn["vimspector#Continue"]()
+end)
+vim.keymap.set("n", "<Leader>dvh", function()
+  vim.fn["vimspector#ListBreakpoints"]()
+end)
+
+vim.keymap.set("n", "<Leader>dc", ":below Compile<CR>", {})
+
+local function get_buffer_visual_selection()
+  local old_reg_content = vim.fn.getreg('"')
+  local old_reg_type = vim.fn.getregtype('"')
+
+  vim.cmd('noautocmd normal! "vy"')
+
+  local selected_text = vim.fn.getreg('"')
+
+  vim.fn.setreg('"', old_reg_content, old_reg_type)
+
+  return selected_text
+end
+
+function get_buffer_selection_or_word()
+  local selection = get_buffer_visual_selection()
+  if selection and selection ~= "" then
+    return selection
+  else
+    return vim.fn.expand("<cword>")
+  end
+end
+
+vim.keymap.set({ "n", "v" }, "<Leader>do", function()
+  local text = get_buffer_selection_or_word()
+  if text and text ~= "" then
+    vim.fn["vimspector#Evaluate"](text)
+  end
+end)
+vim.keymap.set({ "n", "v" }, "<Leader>dp", function()
+  local text = get_buffer_selection_or_word()
+  if text and text ~= "" then
+    vim.fn["vimspector#EvaluateConsole"](text)
+  end
+end)
 
 vim.keymap.set("n", "<Leader>rm", ":below terminal ./main<CR>")
 
@@ -479,24 +626,25 @@ vim.api.nvim_create_autocmd("User", {
 		vim.keymap.del("n", "<leader>en")
 		vim.keymap.del("n", "<leader>em")
 		vim.keymap.del("n", "<Leader>fen")
-		vim.keymap.del("n", "<Leader>dm")
-		vim.keymap.del("n", "<Leader>dl")
-		vim.keymap.del("n", "<Leader>dn")
-		vim.keymap.del("n", "<Leader>dk")
-		vim.keymap.del("n", "<Leader>dg")
-		vim.keymap.del("n", "<Leader>di")
-		vim.keymap.del("n", "<Leader>db")
-		vim.keymap.del("n", "<Leader>dh")
-		vim.keymap.del("n", "<Leader>dB")
-		vim.keymap.del("n", "<Leader>du")
-		vim.keymap.del("n", "<Leader>dv")
-		vim.keymap.del("n", "<Leader>dV")
-		vim.keymap.del("n", "<Leader>dr")
-		vim.keymap.del("n", "<Leader>dj")
-		vim.keymap.del("n", "<Leader>dc")
-		vim.keymap.del({ "n", "v" }, "<Leader>do")
-		vim.keymap.del({ "n", "v" }, "<Leader>dp")
-		vim.keymap.del("n", "<Leader>dw")
+    vim.keymap.del("n", "<Leader>dd")
+    vim.keymap.del("n", "<Leader>dn")
+    vim.keymap.del("n", "<Leader>dk")
+    vim.keymap.del("n", "<Leader>dgg")
+    vim.keymap.del("n", "<Leader>dgv")
+    vim.keymap.del("n", "<Leader>di")
+    vim.keymap.del("n", "<Leader>db")
+    vim.keymap.del("n", "<Leader>dh")
+    vim.keymap.del("n", "<Leader>dB")
+    vim.keymap.del("n", "<Leader>du")
+    vim.keymap.del("n", "<Leader>dvn")
+    vim.keymap.del("n", "<Leader>dvm")
+    vim.keymap.del("n", "<Leader>dvh")
+    vim.keymap.del("n", "<Leader>dvi")
+    vim.keymap.del("n", "<Leader>dvk")
+    vim.keymap.del("n", "<Leader>dj")
+    vim.keymap.del("n", "<Leader>dc")
+    vim.keymap.del({ "n", "v" }, "<Leader>do")
+    vim.keymap.del({ "n", "v" }, "<Leader>dp")
 	end,
 })
 
@@ -555,6 +703,119 @@ vim.api.nvim_create_autocmd("User", {
 		vim.keymap.set("n", "<leader>en", telescope_builtin.live_grep, {})
 		vim.keymap.set("n", "<leader>em", telescope_builtin.find_files, {})
 		vim.keymap.set("n", "<Leader>fen", jcd_to_qf, { noremap = true })
+    vim.keymap.set("n", "<Leader>dd", function()
+      vim.fn["vimspector#Launch"]()
+    end)
+    vim.keymap.set("n", "<F5>", function()
+      vim.fn["vimspector#Continue"]()
+    end)
+    vim.keymap.set("n", "<F10>", function()
+      vim.fn["vimspector#StepOver"]()
+    end)
+    vim.keymap.set("n", "<Leader>dn", function()
+      vim.fn["vimspector#StepOver"]()
+    end)
+    vim.keymap.set("n", "<F11>", function()
+      vim.fn["vimspector#StepInto"]()
+    end)
+    vim.keymap.set("n", "<Leader>dk", function()
+      vim.fn["vimspector#StepInto"]()
+    end)
+    vim.keymap.set("n", "<F12>", function()
+      vim.fn["vimspector#StepOut"]()
+    end)
+    vim.keymap.set("n", "<Leader>dgg", function()
+      vim.fn["vimspector#Stop"]()
+    end)
+    vim.keymap.set("n", "<Leader>dgv", function()
+      vim.fn["vimspector#Reset"]({
+        interactive = false
+      })
+    end)
+    vim.keymap.set("n", "<Leader>di", function()
+      vim.fn["vimspector#StepOut"]()
+    end)
+    vim.keymap.set("n", "<Leader>db", function()
+      vim.fn["vimspector#ToggleBreakpoint"]()
+    end)
+    vim.keymap.set("n", "<Leader>dh", function()
+      vim.fn["vimspector#ClearBreakpoints"]()
+    end)
+    vim.keymap.set("n", "<Leader>dB", function()
+      local file = vim.fn.expand("%:p")
+      local line = vim.fn.line(".")
+      vim.fn["vimspector#SetLineBreakpoint"](
+        file,
+        line
+      )
+    end)
+    vim.keymap.set("n", "<Leader>du", function()
+      local file = vim.fn.expand("%:p")
+      local line = vim.fn.line(".")
+      local logMessage = vim.fn.input("Log Message: ")
+      vim.fn["vimspector#SetLineBreakpoint"](
+        file,
+        line,
+        {
+          logMessage = logMessage,
+        }
+      )
+    end)
+    vim.keymap.set("n", "<Leader>dvn", function()
+      local file = vim.fn.expand("%:p")
+      local line = vim.fn.line(".")
+      local condition = vim.fn.input("Breakpoint Condition: ")
+      local hitCount = tonumber(vim.fn.input("Hit Count: ")) or 1
+      vim.fn["vimspector#SetLineBreakpoint"](
+        file,
+        line,
+        {
+          condition = condition,
+          hitCount = hitCount,
+        }
+      )
+    end)
+    vim.keymap.set("n", "<Leader>dvm", function()
+      local file = vim.fn.expand("%:p")
+      local line = vim.fn.line(".")
+      local condition = vim.fn.input("Breakpoint Condition: ") or nil
+      local logMessage = vim.fn.input("Log Message: ") or nil
+      local hitCount = tonumber(vim.fn.input("Hit Count: ")) or nil
+      local t = vim.tbl_extend("force",
+        {},
+        condition and { condition = condition },
+        logMessage and { logMessage = logMessage },
+        hitCount and { hitCount = hitCount },
+        {}
+      )
+      vim.fn["vimspector#SetLineBreakpoint"](
+        file,
+        line,
+        t
+      )
+    end)
+    vim.keymap.set("n", "<Leader>dvi", function()
+      vim.fn["vimspector#UpFrame"]()
+    end)
+    vim.keymap.set("n", "<Leader>dvk", function()
+      vim.fn["vimspector#DownFrame"]()
+    end)
+    vim.keymap.set("n", "<Leader>dj", function()
+      vim.fn["vimspector#Continue"]()
+    end)
+    vim.keymap.set("n", "<Leader>dc", ":below Compile<CR>", {})
+    vim.keymap.set({ "n", "v" }, "<Leader>do", function()
+      local text = get_buffer_selection_or_word()
+      if text and text ~= "" then
+        vim.fn["vimspector#Evaluate"](text)
+      end
+    end)
+    vim.keymap.set({ "n", "v" }, "<Leader>dp", function()
+      local text = get_buffer_selection_or_word()
+      if text and text ~= "" then
+        vim.fn["vimspector#EvaluateConsole"](text)
+      end
+    end)
 	end,
 })
 

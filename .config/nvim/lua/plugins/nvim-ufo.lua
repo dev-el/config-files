@@ -2,10 +2,8 @@ return {
   'kevinhwang91/nvim-ufo',
   dependencies = {'kevinhwang91/promise-async'},
   config = function()
-    vim.o.foldcolumn = 'auto:1'
     vim.o.foldlevel = 99
     vim.o.foldlevelstart = 99
-    vim.o.foldenable = true
 
     local ufo = require('ufo')
 
@@ -20,8 +18,30 @@ return {
     ufo.setup({
       ---@diagnostic disable-next-line: unused-local
       provider_selector = function(bufnr, filetype, buftype)
-        return {'treesitter', 'indent'}
+        if buftype == "" then
+          return {'treesitter', 'indent'}
+        else
+          return ''
+        end
       end
+    })
+
+    vim.api.nvim_create_autocmd("BufWinEnter", {
+      callback = function(args)
+        local bufnr = args.buf
+        local bt = vim.bo[bufnr].buftype
+        local bn = vim.api.nvim_buf_get_name(bufnr)
+
+        local ok, u = pcall(require, "ufo")
+        if not ok or not u then
+          return
+        end
+        if bt ~= "" or vim.fn.empty(bn) == 1 then
+          u.detach(bufnr)
+        else
+          u.attach(bufnr)
+        end
+      end,
     })
   end
 }

@@ -10,7 +10,7 @@ return {
 		vim.keymap.set("n", "<leader>m", builtin.buffers, {})
 		vim.keymap.set("n", "<leader>en", builtin.live_grep, {})
 		vim.keymap.set("n", "<leader>em", builtin.find_files, {})
-		vim.keymap.set("n", "<leader>eK", builtin.keymaps, {})
+		vim.keymap.set("n", "<leader>eck", builtin.keymaps, {})
 
 		opts.defaults = {
 			mappings = {

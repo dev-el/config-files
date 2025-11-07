@@ -12,7 +12,7 @@ return {
 			thousands = false, -- or line number thousands separator string ("." / ",")
 			relculright = false, -- whether to right-align the cursor line number with 'relativenumber' set
 			ft_ignore = { "neo-tree", "netrw", "dbui" }, -- Lua table with 'filetype' values for which 'statuscolumn' will be unset
-			bt_ignore = { "terminal" }, -- Lua table with 'buftype' values for which 'statuscolumn' will be unset
+			bt_ignore = { "terminal", "nofile", "prompt" }, -- Lua table with 'buftype' values for which 'statuscolumn' will be unset
 			segments = {
 				{
 					sign = {
@@ -41,9 +41,8 @@ return {
 						text = { ".*" }, -- table of Lua patterns to match the extmark sign text against
 						namespace = { ".*" }, -- table of Lua patterns to match the extmark sign namespace against
 
-						maxwidth = 1, -- maximum number of signs that will be displayed in this segment
-						colwidth = 2, -- number of display cells per sign in this segment
-						auto = false, -- boolean or string indicating what will be drawn when no signs
+						maxwidth = 2, -- maximum number of signs that will be displayed in this segment
+						auto = true, -- boolean or string indicating what will be drawn when no signs
 
 						wrap = false, -- when true, signs in this segment will also be drawn on the
 
@@ -51,11 +50,12 @@ return {
 						fillcharhl = nil, -- highlight group used for fillchar (SignColumn/CursorLineSign if omitted)
 						foldclosed = false, -- when true, show signs from lines in a closed fold on the first line
 					},
+          align = "left"
 				},
 				{
 					sign = {
 						namespace = { "diagnostic/signs" },
-						maxwidth = 1,
+            colwidth = 1,
 						fillchar = " ",
 
 						auto = false,
@@ -63,9 +63,14 @@ return {
 					click = "v:lua.ScSa",
 				},
 				{
-					sign = { name = { "DapBreakpoint" }, maxwidth = 1, fillchar = " ", auto = true },
-					click = "v:lua.ScSa",
-				},
+          sign = {
+            name = { "vimspectorBP", "vimspectorBPCond", "vimspectorBPLog", "vimspectorBPDisabled", "vimspectorPC", "vimspectorPCBP", "vimspectorNonActivePC", "vimspectorCurrentThread", "vimspectorCurrentFrame" },
+            maxwidth = 1,
+            fillchar = " ",
+            auto = false
+          },
+          click = "v:lua.ScSa"
+        },
 			},
 			clickmod = clickmod,
 			clickhandlers = {
@@ -83,5 +88,6 @@ return {
 		statuscol.setup(cfg)
 		vim.opt.number = true
 		vim.opt.signcolumn = "no"
+    vim.opt.foldcolumn = "auto:2"
 	end,
 }
