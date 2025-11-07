@@ -277,7 +277,12 @@ vim.g.vimwiki_list = {
 	},
 }
 
-vim.keymap.set({ "n", "x" }, "<Leader>gn", [[:silent execute '!chromium --incognito ' . shellescape(expand('<cfile>'), 1)<CR>]], {})
+vim.keymap.set(
+	{ "n", "x" },
+	"<Leader>gn",
+	[[:silent execute '!chromium --incognito ' . shellescape(expand('<cfile>'), 1)<CR>]],
+	{}
+)
 
 vim.g.bullets_enabled_file_types = {
 	"markdown",
