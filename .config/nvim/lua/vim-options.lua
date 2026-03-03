@@ -848,7 +848,9 @@ vim.keymap.set("n", "<Leader>ecm", ":tab split<CR>")
 
 vim.cmd("set noshowcmd")
 
-vim.cmd("set laststatus=0")
+vim.cmd("set laststatus=3")
+
+vim.cmd("set showtabline=2")
 
 function _G.current_treesitter_context()
 	local f = require("nvim-treesitter").statusline({
@@ -872,8 +874,6 @@ function _G.current_treesitter_context()
 	end
 	return " " .. context
 end
-
-vim.cmd("set winbar=%<%F\\ %=%h%m%r")
 
 vim.cmd("set guifont=BlexMono\\ Nerd\\ Font\\ Light:h16")
 
