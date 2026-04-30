@@ -416,7 +416,7 @@ vim.keymap.set("n", "<Leader>dvh", function()
   vim.fn["vimspector#ListBreakpoints"]()
 end)
 
-vim.keymap.set("n", "<Leader>dc", ":below Compile<CR>", {})
+vim.keymap.set("n", "<Leader>dc", ":below terminal make<CR>", {})
 
 local function get_buffer_visual_selection()
   local old_reg_content = vim.fn.getreg('"')
@@ -803,7 +803,7 @@ vim.api.nvim_create_autocmd("User", {
     vim.keymap.set("n", "<Leader>dj", function()
       vim.fn["vimspector#Continue"]()
     end)
-    vim.keymap.set("n", "<Leader>dc", ":below Compile<CR>", {})
+    vim.keymap.set("n", "<Leader>dc", ":below terminal make<CR>", {})
     vim.keymap.set({ "n", "v" }, "<Leader>do", function()
       local text = get_buffer_selection_or_word()
       if text and text ~= "" then

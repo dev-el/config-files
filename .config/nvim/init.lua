@@ -14,6 +14,36 @@ vim.opt.rtp:prepend(lazypath)
 
 vim.opt.guicursor = "i:block"
 
+local ts_ft_to_parser = {
+	c = "c",
+	cpp = "cpp",
+	lua = "lua",
+	glsl = "glsl",
+	java = "java",
+	vim = "vim",
+	help = "vimdoc",
+	query = "query",
+	elixir = "elixir",
+	heex = "heex",
+	javascript = "javascript",
+	html = "html",
+	php = "php",
+}
+
+local ts_parsers_only = {}
+
+function get_treesitter_config(type)
+	if type == "fts" then
+		return vim.tbl_keys(ts_ft_to_parser)
+	elseif type == "parsers" then
+		local parsers = vim.tbl_values(ts_ft_to_parser)
+		vim.list_extend(parsers, ts_parsers_only)
+		return parsers
+	end
+end
+
+nvim_tressiter_fts = get_treesitter_config("fts")
+
 require("vim-options")
 require("lazy").setup("plugins")
 
@@ -45,11 +75,11 @@ local modes = {
 }
 
 vim.cmd([[
-highlight CustomStatusBar guifg=#d4d4d4 guibg=#373737
-highlight DiagnosticSignErrorSt guifg=#f44747 guibg=#373737
-highlight DiagnosticSignWarnSt guifg=#dcdcaa guibg=#373737
-highlight DiagnosticSignHintSt guifg=#c586c0 guibg=#373737
-highlight DiagnosticSignInfoSt guifg=#569cd6 guibg=#373737
+highlight CustomStatusBar guifg=#d4d4d4
+highlight DiagnosticSignErrorSt guifg=#f44747
+highlight DiagnosticSignWarnSt guifg=#dcdcaa
+highlight DiagnosticSignHintSt guifg=#c586c0
+highlight DiagnosticSignInfoSt guifg=#569cd6
 ]])
 
 vim.cmd([[
@@ -207,3 +237,11 @@ vim.g.nvlime_mappings = {
 		},
 	},
 }
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = nvim_tressiter_fts,
+  callback = function()
+    vim.treesitter.start()
+    vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+  end,
+})

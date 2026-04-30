@@ -91,7 +91,7 @@ return {
 			end,
 		})
 
-		local ts_repeat_move = require("nvim-treesitter.textobjects.repeatable_move")
+		local ts_repeat_move = require("nvim-treesitter-textobjects.repeatable_move")
 
 		submode.create("RepeatNavMode", {
 			mode = "n",
